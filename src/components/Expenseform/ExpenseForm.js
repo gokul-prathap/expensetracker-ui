@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styles from './ExpenseForm.module.css';
 import CurrencyInput from 'react-currency-input-field';
+import { saveExpense } from '../../services/expenseService';
 import CategoryManager from '../CategoryManager/CategoryManager';
 import ExpandableDropdown from '../ExpandableDropdown/ExpandableDropdown';
 
@@ -10,8 +11,10 @@ function ExpenseForm() {
         price: '',
         category: '',
         description: '',
-        paymentMethod: ''
+        paymentMethod: '',
+        lastModified: new Date().toISOString()
     });
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (event) => {
         setFormData({
@@ -20,13 +23,30 @@ function ExpenseForm() {
         });
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        // Handle form submission here
-        console.log(formData); // For now, just log the form data
+        setLoading(true);
+        const updatedFormData = {
+            ...formData,
+            lastModified: new Date().toISOString()
+        };
+        try {
+            await saveExpense(updatedFormData);
+            alert('Expense saved successfully!');
+        } catch (error) {
+            alert('Failed to save expense');
+        } finally {
+            setLoading(false);
+        }
+        console.log(updatedFormData); // For now, just log the form data
     };
 
-    const categories = ['Food', 'Transportation', 'Entertainment', 'Shopping', 'Utilities'];
+    const categories = ['Food', 'Recharge', 'Transportation', 'Entertainment', 'Shopping', 'Utilities', 'Rent', 'Healthcare', 'Education', 'Insurance', 'Travel', 'Groceries', 'Dining Out', 'Fitness', 'Personal Care', 'Household Supplies', 'Gifts & Donations', 'Subscriptions', 'Internet', 'Mobile', 'Electricity', 'Water', 'Gas', 'Maintenance', 'Loan Payments', 'Taxes', 'Investments', 'Savings', 'Miscellaneous'];
+
+    const paymentMethods = [
+        'gPay','Cash', 'Credit Card', 'Airtel Money', 'Amazon Pay', 'BHIM', 'Cred', 'Debit Card', 'Freecharge', 'JioMoney', 'Mobikwik', 'Online Banking', 'Ola Money', 'Paytm', 'PhonePe', 'pay Later', 'PayZapp', 'UPI', 'Utilities', 'Yono'
+      ];
+      
 
     return (
         <form onSubmit={handleSubmit}>
@@ -61,7 +81,7 @@ function ExpenseForm() {
             <div className={styles.form}>
                 {/* <CategoryManager></CategoryManager> */}
                 <select
-                className={styles.form}
+                    className={styles.form}
                     id="category"
                     name="category"
                     value={formData.category}
@@ -77,7 +97,28 @@ function ExpenseForm() {
                     ))}
                 </select>
 
-                
+                <div className={styles.form}>
+                <select
+                    className={styles.form}
+                    id="paymentMethod"
+                    name="paymentMethod"
+                    value={formData.paymentMethod}
+                    onChange={handleChange}
+
+                    required
+                >
+                    <option value="">Select Payment Method</option>
+                    {paymentMethods.map((paymentMethod) => (
+                        <option key={paymentMethod} value={paymentMethod}>
+                            {paymentMethod}
+                        </option>
+                    ))}
+                </select>
+
+
+            </div>
+
+
             </div>
             <div className={styles.form}>
                 <label htmlFor="description">Description:</label>
@@ -88,7 +129,9 @@ function ExpenseForm() {
                     onChange={handleChange}
                 ></textarea>
             </div>
-            <button type="submit">Submit</button>
+            <button type="submit" disabled={loading}>
+                {loading ? 'Saving...' : 'Save Expense'}
+            </button>
         </form>
     );
 }
