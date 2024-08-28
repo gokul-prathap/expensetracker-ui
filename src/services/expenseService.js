@@ -1,6 +1,6 @@
 // src/services/expenseService.js
 // const API_URL = 'http://localhost:8080/api'; 
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = process.env.REACT_APP_API_URL || 'https://expensetracker-api-gokul-prathap-gokuls-projects-772978f1.vercel.app/api';
 export const getAllExpenses = async () => {
   try {
     console.log('API URL: ',API_URL)
