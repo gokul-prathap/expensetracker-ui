@@ -11,7 +11,7 @@ export const getAllExpenses = async () => {
         'Access-Control-Allow-Origin': '*', // Allow requests from any origin
         'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE', // Specify allowed HTTP methods
         'Access-Control-Allow-Headers': 'Content-Type, Authorization', // Specify allowed headers
-        Authorization: 'iSYgAYVt8924RZAs4zDdg48n', // Your authorization token
+        'Authorization': 'iSYgAYVt8924RZAs4zDdg48n', // Your authorization token
       },
     });
     if (!response.ok) {
