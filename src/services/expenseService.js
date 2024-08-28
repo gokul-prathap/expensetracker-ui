@@ -5,6 +5,8 @@ export const getAllExpenses = async () => {
   try {
     console.log('API URL: ',API_URL)
     const response = await fetch(`${API_URL}/expenses`);
+    response.setHeader('Access-Control-Allow-Origin', '*');
+    response.setHeader('Authorization','iSYgAYVt8924RZAs4zDdg48n')
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
@@ -20,7 +22,9 @@ export const saveExpense = async (expenseData) => {
     const response = await fetch(`${API_URL}/submit`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Authorization':'iSYgAYVt8924RZAs4zDdg48n'
       },
       body: JSON.stringify(expenseData)
     });
