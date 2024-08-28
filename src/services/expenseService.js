@@ -1,6 +1,6 @@
 // src/services/expenseService.js
-const API_URL = 'http://localhost:8080/api'; // Adjust the URL to match your backend server
-
+// const API_URL = 'http://localhost:8080/api'; 
+const API_URL = process.env.REACT_APP_API_URL;
 export const getAllExpenses = async () => {
   try {
     const response = await fetch(`${API_URL}/expenses`);
