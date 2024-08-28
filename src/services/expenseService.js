@@ -5,6 +5,7 @@ export const getAllExpenses = async () => {
   try {
     console.log('API URL: ',API_URL)
     const response = await fetch(`${API_URL}/expenses`,{
+      mode: 'no-cors',
       method: 'GET',
       headers: {
         'Access-Control-Allow-Origin': '*', // Allow requests from any origin
