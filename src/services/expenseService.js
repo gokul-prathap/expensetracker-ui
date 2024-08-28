@@ -3,6 +3,7 @@
 const API_URL = process.env.REACT_APP_API_URL;
 export const getAllExpenses = async () => {
   try {
+    console.log('API URL: ',API_URL)
     const response = await fetch(`${API_URL}/expenses`);
     if (!response.ok) {
       throw new Error('Network response was not ok');
