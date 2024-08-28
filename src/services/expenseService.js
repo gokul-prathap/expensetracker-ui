@@ -6,6 +6,8 @@ export const getAllExpenses = async () => {
     console.log('API URL: ',API_URL)
     const response = await fetch(`${API_URL}/expenses`);
     response.setHeader('Access-Control-Allow-Origin', '*');
+    response.setHeader('Access-Control-Allow-Origin', 'https://expensetracker-ui-self.vercel.app');
+
     response.setHeader('Authorization','iSYgAYVt8924RZAs4zDdg48n')
     if (!response.ok) {
       throw new Error('Network response was not ok');
@@ -24,7 +26,8 @@ export const saveExpense = async (expenseData) => {
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
-        'Authorization':'iSYgAYVt8924RZAs4zDdg48n'
+        'Authorization':'iSYgAYVt8924RZAs4zDdg48n',
+        'Access-Control-Allow-Origin': 'https://expensetracker-ui-self.vercel.app'
       },
       body: JSON.stringify(expenseData)
     });
