@@ -6,7 +6,7 @@ export const getAllExpenses = async () => {
     console.log('API URL: ',API_URL)
     const response = await fetch(`${API_URL}/expenses`,{
       headers: {
-        'Authorization': 'iSYgAYVt8924RZAs4zDdg48n', // Your authorization token
+        'Authorization': 'Bearer iSYgAYVt8924RZAs4zDdg48n', // Your authorization token
       },
       method: 'GET',
       mode: 'no-cors',
@@ -26,8 +26,9 @@ export const saveExpense = async (expenseData) => {
     const response = await fetch(`${API_URL}/submit`, {
       method: 'POST',
       headers: {
-        'Authorization':'iSYgAYVt8924RZAs4zDdg48n',
+        'Authorization':'Bearer iSYgAYVt8924RZAs4zDdg48n',
       },
+      mode: 'no-cors',
       body: JSON.stringify(expenseData)
     });
     if (!response.ok) {
