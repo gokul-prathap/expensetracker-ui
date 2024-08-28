@@ -44,95 +44,97 @@ function ExpenseForm() {
     const categories = ['Food', 'Recharge', 'Transportation', 'Entertainment', 'Shopping', 'Utilities', 'Rent', 'Healthcare', 'Education', 'Insurance', 'Travel', 'Groceries', 'Dining Out', 'Fitness', 'Personal Care', 'Household Supplies', 'Gifts & Donations', 'Subscriptions', 'Internet', 'Mobile', 'Electricity', 'Water', 'Gas', 'Maintenance', 'Loan Payments', 'Taxes', 'Investments', 'Savings', 'Miscellaneous'];
 
     const paymentMethods = [
-        'gPay','Cash', 'Credit Card', 'Airtel Money', 'Amazon Pay', 'BHIM', 'Cred', 'Debit Card', 'Freecharge', 'JioMoney', 'Mobikwik', 'Online Banking', 'Ola Money', 'Paytm', 'PhonePe', 'pay Later', 'PayZapp', 'UPI', 'Utilities', 'Yono'
-      ];
-      
+        'gPay', 'Cash', 'Credit Card', 'Airtel Money', 'Amazon Pay', 'BHIM', 'Cred', 'Debit Card', 'Freecharge', 'JioMoney', 'Mobikwik', 'Online Banking', 'Ola Money', 'Paytm', 'PhonePe', 'pay Later', 'PayZapp', 'UPI', 'Utilities', 'Yono'
+    ];
+
 
     return (
-        <form onSubmit={handleSubmit}>
-            <h1>Expense Tracker</h1>
-            <div className={styles.form}>
-                <label htmlFor="date">Date:</label>
-                <input
-                    type="date"
-                    id="date"
-                    name="date"
-                    value={formData.date}
-                    onChange={handleChange}
-                    required
-                />
-            </div>
-            <div className={styles.form}>
-                <label htmlFor="price">Price:</label>
-                <CurrencyInput
-                    id="price-input"
-                    name="price"
-                    required
-                    placeholder="how much was the expense ?"
-                    prefix="₹"
-                    decimalsLimit={2}
-                    value={formData.price.formatted}
-                    onChange={handleChange}
-                    onValueChange={(value, name, values) => {
-                        console.log(value, name, values);
-                    }}
-                />
-            </div>
-            <div className={styles.form}>
-                {/* <CategoryManager></CategoryManager> */}
-                <select
-                    className={styles.form}
-                    id="category"
-                    name="category"
-                    value={formData.category}
-                    onChange={handleChange}
-
-                    required
-                >
-                    <option value="">Select Category</option>
-                    {categories.map((category) => (
-                        <option key={category} value={category}>
-                            {category}
-                        </option>
-                    ))}
-                </select>
-
+        <div className={styles.formContainer}>
+            <form onSubmit={handleSubmit}>
+                <h1 className={styles.title}>Expense Tracker</h1>
                 <div className={styles.form}>
-                <select
-                    className={styles.form}
-                    id="paymentMethod"
-                    name="paymentMethod"
-                    value={formData.paymentMethod}
-                    onChange={handleChange}
+                    <label htmlFor="date">Date:</label>
+                    <input
+                        type="date"
+                        id="date"
+                        name="date"
+                        value={formData.date}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div className={styles.form}>
+                    <label htmlFor="price">Price:</label>
+                    <CurrencyInput
+                        id="price-input"
+                        name="price"
+                        required
+                        placeholder="how much was the expense ?"
+                        prefix="₹"
+                        decimalsLimit={2}
+                        value={formData.price.formatted}
+                        onChange={handleChange}
+                        onValueChange={(value, name, values) => {
+                            console.log(value, name, values);
+                        }}
+                    />
+                </div>
+                <div className={styles.dropdownContainer}>
+                    {/* <CategoryManager></CategoryManager> */}
+                    <select
+                        className={styles.form}
+                        id="category"
+                        name="category"
+                        value={formData.category}
+                        onChange={handleChange}
 
-                    required
-                >
-                    <option value="">Select Payment Method</option>
-                    {paymentMethods.map((paymentMethod) => (
-                        <option key={paymentMethod} value={paymentMethod}>
-                            {paymentMethod}
-                        </option>
-                    ))}
-                </select>
+                        required
+                    >
+                        <option value="">Category</option>
+                        {categories.map((category) => (
+                            <option key={category} value={category}>
+                                {category}
+                            </option>
+                        ))}
+                    </select>
+
+                    
+                        <select
+                            className={styles.form}
+                            id="paymentMethod"
+                            name="paymentMethod"
+                            value={formData.paymentMethod}
+                            onChange={handleChange}
+
+                            required
+                        >
+                            <option value="">Payment Method</option>
+                            {paymentMethods.map((paymentMethod) => (
+                                <option key={paymentMethod} value={paymentMethod}>
+                                    {paymentMethod}
+                                </option>
+                            ))}
+                        </select>
 
 
-            </div>
+                    
 
 
-            </div>
-            <div className={styles.form}>
-                <label htmlFor="description">Description:</label>
-                <textarea
-                    id="description"
-                    name="description"
-                    value={formData.description}
-                    onChange={handleChange}
-                ></textarea>
-            </div>
-            <button type="submit" disabled={loading}>
-                {loading ? 'Saving...' : 'Save Expense'}
-            </button>
-        </form>
+                </div>
+                <div className={styles.form}>
+                    <label htmlFor="description">Description:</label>
+                    <textarea
+                        id="description"
+                        name="description"
+                        value={formData.description}
+                        onChange={handleChange}
+                    ></textarea>
+                </div>
+                <button type="submit" disabled={loading}>
+                    {loading ? 'Saving...' : 'Save Expense'}
+                </button>
+            </form>
+        </div>
     );
 }
 
