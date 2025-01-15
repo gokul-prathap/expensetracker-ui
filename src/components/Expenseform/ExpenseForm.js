@@ -23,6 +23,13 @@ function ExpenseForm() {
         });
     };
 
+    const handleCurrencyChange = (value) => {
+        setFormData({
+            ...formData,
+            price: value
+        });
+    };
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         setLoading(true);
@@ -46,7 +53,6 @@ function ExpenseForm() {
     const paymentMethods = [
         'gPay', 'Cash', 'Credit Card', 'Airtel Money', 'Amazon Pay', 'BHIM', 'Cred', 'Debit Card', 'Freecharge', 'JioMoney', 'Mobikwik', 'Online Banking', 'Ola Money', 'Paytm', 'PhonePe', 'pay Later', 'PayZapp', 'UPI', 'Utilities', 'Yono'
     ];
-
 
     return (
         <div className={styles.formContainer}>
@@ -72,22 +78,17 @@ function ExpenseForm() {
                         placeholder="how much was the expense ?"
                         prefix="₹"
                         decimalsLimit={2}
-                        value={formData.price.formatted}
-                        onChange={handleChange}
-                        onValueChange={(value, name, values) => {
-                            console.log(value, name, values);
-                        }}
+                        value={formData.price}
+                        onValueChange={handleCurrencyChange}
                     />
                 </div>
                 <div className={styles.dropdownContainer}>
-                    {/* <CategoryManager></CategoryManager> */}
                     <select
                         className={styles.form}
                         id="category"
                         name="category"
                         value={formData.category}
                         onChange={handleChange}
-
                         required
                     >
                         <option value="">Category</option>
@@ -97,29 +98,21 @@ function ExpenseForm() {
                             </option>
                         ))}
                     </select>
-
-                    
-                        <select
-                            className={styles.form}
-                            id="paymentMethod"
-                            name="paymentMethod"
-                            value={formData.paymentMethod}
-                            onChange={handleChange}
-
-                            required
-                        >
-                            <option value="">Payment Method</option>
-                            {paymentMethods.map((paymentMethod) => (
-                                <option key={paymentMethod} value={paymentMethod}>
-                                    {paymentMethod}
-                                </option>
-                            ))}
-                        </select>
-
-
-                    
-
-
+                    <select
+                        className={styles.form}
+                        id="paymentMethod"
+                        name="paymentMethod"
+                        value={formData.paymentMethod}
+                        onChange={handleChange}
+                        required
+                    >
+                        <option value="">Payment Method</option>
+                        {paymentMethods.map((paymentMethod) => (
+                            <option key={paymentMethod} value={paymentMethod}>
+                                {paymentMethod}
+                            </option>
+                        ))}
+                    </select>
                 </div>
                 <div className={styles.form}>
                     <label htmlFor="description">Description:</label>

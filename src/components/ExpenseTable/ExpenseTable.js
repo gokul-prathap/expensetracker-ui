@@ -62,31 +62,43 @@ const ExpenseTable = () => {
       ) : (
         <table {...getTableProps()}>
           <thead>
-            {headerGroups.map(headerGroup => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map(column => (
-                  <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                    {column.render('Header')}
-                    <span>
-                      {column.isSorted
-                        ? column.isSortedDesc
-                          ? ' 🔽'
-                          : ' 🔼'
-                        : ''}
-                    </span>
-                  </th>
-                ))}
-              </tr>
-            ))}
+            {headerGroups.map(headerGroup => {
+              const { key, ...rest } = headerGroup.getHeaderGroupProps();
+              return (
+                <tr key={key} {...rest}>
+                  {headerGroup.headers.map(column => {
+                    const { key, ...rest } = column.getHeaderProps(column.getSortByToggleProps());
+                    return (
+                      <th key={key} {...rest}>
+                        {column.render('Header')}
+                        <span>
+                          {column.isSorted
+                            ? column.isSortedDesc
+                              ? ' 🔽'
+                              : ' 🔼'
+                            : ''}
+                        </span>
+                      </th>
+                    );
+                  })}
+                </tr>
+              );
+            })}
           </thead>
           <tbody {...getTableBodyProps()}>
             {rows.map(row => {
               prepareRow(row);
+              const { key, ...rest } = row.getRowProps();
               return (
-                <tr {...row.getRowProps()}>
-                  {row.cells.map(cell => (
-                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                  ))}
+                <tr key={key} {...rest}>
+                  {row.cells.map(cell => {
+                    const { key, ...rest } = cell.getCellProps();
+                    return (
+                      <td key={key} {...rest}>
+                        {cell.render('Cell')}
+                      </td>
+                    );
+                  })}
                 </tr>
               );
             })}
