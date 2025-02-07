@@ -18,7 +18,7 @@ export const getAllExpenses = async () => {
   try {
     console.log('API URL:', API_URL);
     console.log(process.env.REACT_APP_API_URL)
-    const response = await axios.get(`${API_URL}/expenses`, {
+    const response = await axios.get(`${API_URL}/expenses/getAllExpenses`, {
       headers: headers,
       // mode:'no-cors',
     });
@@ -39,6 +39,25 @@ export const saveExpense = async (expenseData) => {
     return response.data;
   } catch (error) {
     console.error('Error saving expense:', error);
+    throw error;
+  }
+};
+
+// expenseService.js
+
+// const API_URL = 'your_api_url'; // Replace with your API URL
+
+export const deleteExpense = async (id) => {
+  try {
+    const response = await axios.delete(`${API_URL}/expenses/deleteExpense/${id}`, {
+      headers: {
+        Authorization: bearer,
+      },
+    });
+    console.log('Deleting...', id);
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting expense:', error);
     throw error;
   }
 };

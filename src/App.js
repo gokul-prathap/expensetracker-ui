@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import ExpenseForm from './components/Expenseform/ExpenseForm';
+import ExpenseForm from './components/ExpenseForm/ExpenseForm';
 import ExpenseTable from './components/ExpenseTable/ExpenseTable';
 import { useState } from 'react';
 
@@ -22,7 +22,7 @@ function App() {
 
   return (
     <div>
-      <ExpenseForm />,
+      {/* <ExpenseForm />, */}
       <ExpenseTable data={data}></ExpenseTable>
     </div>
   );

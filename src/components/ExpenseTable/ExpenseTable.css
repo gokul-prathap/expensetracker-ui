@@ -22,3 +22,27 @@ table {
     background-color: #ddd;
   }
   
+  .row-success {
+    background-color: green;
+    color: white;
+    animation: fadeOut 3s forwards;
+  }
+  
+  .row-error {
+    background-color: red;
+    color: white;
+    animation: fadeOut 3s forwards;
+  }
+  
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
+  .row-fade-out {
+    animation: fadeOut 3s forwards;
+  }  

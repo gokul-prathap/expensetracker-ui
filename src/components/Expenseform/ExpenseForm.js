@@ -39,6 +39,14 @@ function ExpenseForm() {
         };
         try {
             await saveExpense(updatedFormData);
+            setFormData({
+                date: new Date().toISOString().split('T')[0],
+                price: '',
+                category: '',
+                description: '',
+                paymentMethod: '',
+                lastModified: new Date().toISOString()
+            });
             alert('Expense saved successfully!');
         } catch (error) {
             alert('Failed to save expense');
