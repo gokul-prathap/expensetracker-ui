@@ -33,6 +33,29 @@ table {
     color: white;
     animation: fadeOut 3s forwards;
   }
+
+  .round-button {
+  border: none;
+  border-radius: 25%;
+  padding: 10px;
+  margin: 5px;
+  cursor: pointer;
+  background-color: green;
+  transition: background-color 0.3s;
+}
+
+.round-button.edit-button:hover {
+  background-color: #146ba5;
+}
+.round-button.delete-button:hover {
+  background-color: #e71b1b;
+}
+
+.round-button:focus {
+  outline: none;
+}
+
+
   
   @keyframes fadeOut {
     from {

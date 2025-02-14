@@ -61,3 +61,13 @@ export const deleteExpense = async (id) => {
     throw error;
   }
 };
+
+export const updateExpense = async (id, expenseData) => {
+  try {
+    const response = await axios.put(`${API_URL}/expenses/updateExpense/${id}`, expenseData);
+    return response.data;
+  } catch (error) {
+    console.error('Error updating expense:', error);
+    throw error;
+  }
+};

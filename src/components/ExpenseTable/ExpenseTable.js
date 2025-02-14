@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useTable, useSortBy } from 'react-table';
 import { format, isValid } from 'date-fns';
 import './ExpenseTable.css';
-import { getAllExpenses, deleteExpense, saveExpense } from '../../services/expenseService';
+import { getAllExpenses, deleteExpense, saveExpense, updateExpense } from '../../services/expenseService';
 import ClipLoader from 'react-spinners/ClipLoader';
 import DeleteConfirmation from '../DeleteConfirmation/DeleteConfirmation';
 import ExpenseForm from '../ExpenseForm/ExpenseForm';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const ExpenseTable = () => {
   const [data, setData] = useState([]);
@@ -14,6 +16,7 @@ const ExpenseTable = () => {
   const [showModal, setShowModal] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
   const [deleteStatus, setDeleteStatus] = useState({});
+  const [editExpense, setEditExpense] = useState(null);
 
   const fetchData = async () => {
     try {
@@ -53,19 +56,32 @@ const ExpenseTable = () => {
 
   const handleSave = async (expenseData) => {
     try {
-      await saveExpense(expenseData);
-      await fetchData(); // Refresh the table data after saving an expense
+      if (editExpense) {
+        await updateExpense(editExpense._id, expenseData);
+        setEditExpense(null);
+      } else {
+        await saveExpense(expenseData);
+      }
+      await fetchData(); // Refresh the table data after saving/updating an expense
       return true;
     } catch (error) {
-      console.error('Error saving expense:', error);
+      console.error('Error saving/updating expense:', error);
       return false;
     }
+  };
+
+  const handleEdit = (expense) => {
+    setEditExpense(expense);
   };
 
   const columns = React.useMemo(
     () => [
       { Header: 'Category', accessor: 'category' },
-      { Header: 'Price', accessor: 'price' },
+      {
+        Header: 'Price',
+        accessor: 'price',
+        Cell: ({ value }) => `₹${value}`,
+      },
       { Header: 'Description', accessor: 'description' },
       {
         Header: 'Date',
@@ -95,9 +111,14 @@ const ExpenseTable = () => {
       {
         Header: 'Actions',
         Cell: ({ row }) => (
-          <button onClick={() => { setDeleteId(row.index); setShowModal(true); }}>
-            Delete
-          </button>
+          <>
+            <button className="round-button edit-button" onClick={() => handleEdit(row.original)}>
+              <FontAwesomeIcon icon={faEdit} />
+            </button>
+            <button className="round-button delete-button" onClick={() => { setDeleteId(row.index); setShowModal(true); }}>
+              <FontAwesomeIcon icon={faTrash} />
+            </button>
+          </>
         ),
       },
     ],
@@ -114,7 +135,7 @@ const ExpenseTable = () => {
 
   return (
     <div className="expense-tracker">
-      <ExpenseForm onSave={handleSave} />
+      <ExpenseForm onSave={handleSave} editExpense={editExpense} />
       {loading ? (
         <div className="spinner-container">
           <ClipLoader color="#123abc" loading={loading} size={150} />
